@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RM Dormitel - Booking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-200 min-h-screen flex items-center justify-center font-sans antialiased relative">
+
+    <div class="absolute inset-0 z-0">
+        <img src="bookingbg.png" alt="Background" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-white/5 backdrop-blur-sm"></div>
+    </div>
+
+    <main class="relative z-10 bg-white rounded-lg shadow-xl border border-white max-w-[420px] w-full mx-4 p-8">
+        <form id="bookingForm" class="space-y-5">
+            <div>
+                <label class="block text-[10px] font-black text-gray-800 uppercase tracking-wider mb-1.5">Full Name</label>
+                <input type="text" placeholder="Enter your name" required class="w-full bg-gray-100 border border-gray-200 text-xs px-3 py-2.5 rounded text-gray-700 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-gray-400 transition">
+            </div>
+
+            <div>
+                <label class="block text-[10px] font-black text-gray-800 uppercase tracking-wider mb-1.5">Contact Number</label>
+                <input type="tel" placeholder="Enter your contact number" required class="w-full bg-gray-100 border border-gray-200 text-xs px-3 py-2.5 rounded text-gray-700 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-gray-400 transition">
+            </div>
+
+            <div>
+                <label class="block text-[10px] font-black text-gray-800 uppercase tracking-wider mb-1.5">Move-In Date</label>
+                <input type="date" required class="w-full bg-gray-100 border border-gray-200 text-xs px-3 py-2.5 rounded text-gray-500 focus:outline-none focus:bg-white focus:border-gray-400 transition">
+            </div>
+
+            <div>
+                <label class="block text-[10px] font-black text-gray-800 uppercase tracking-wider mb-1.5">Room Type</label>
+                <div class="relative">
+                    <select required class="w-full bg-gray-100 border border-gray-200 text-xs px-3 py-2.5 rounded text-gray-400 focus:outline-none focus:bg-white focus:border-gray-400 transition appearance-none cursor-pointer">
+                        <option value="" disabled selected>Select room type</option>
+                        <option value="single" class="text-gray-800">Standard Single</option>
+                        <option value="double" class="text-gray-800">Standard Double</option>
+                        <option value="dorm" class="text-gray-800">Deluxe Suite</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
+                        <svg class="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-[10px] font-black text-gray-800 uppercase tracking-wider leading-normal">
+                    Please send your payment to GCash number: <br>
+                    <span class="text-gray-900 tracking-wide font-black">09123456789</span>
+                </label>
+                <div class="mt-2 relative">
+                    <input type="file" accept="image/*" required id="receipt-upload" class="hidden">
+                    <label id="file-label" for="receipt-upload" class="w-full bg-gray-100 border border-gray-200 text-xs px-3 py-2.5 rounded text-gray-400 flex justify-between items-center cursor-pointer hover:bg-gray-200 transition">
+                        <span>Upload GCash receipt</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                    </label>
+                </div>
+            </div>
+
+            <div class="pt-2 flex flex-col items-center space-y-3">
+                <button type="submit" class="w-full bg-[#A34343] hover:bg-[#8A3535] text-white text-[10px] font-bold uppercase tracking-widest py-3 rounded shadow-sm transition">
+                    Upload Details
+                </button>
+                <a href="index.html" class="inline-block bg-[#9AD0EC] hover:bg-[#7EC2E7] text-gray-900 text-[10px] font-semibold px-4 py-1.5 rounded transition">
+                    Back to Home
+                </a>
+            </div>
+        </form>
+    </main>
+
+    <div id="successOverlay" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-white p-8 rounded-lg shadow-xl max-w-sm w-full text-center relative">
+            <button onclick="toggleOverlay(false)" class="absolute top-4 right-4 text-gray-400 hover:text-black">✕</button>
+            <div class="text-green-500 text-4xl mb-4">✔</div>
+            <h2 class="text-xl font-black mb-2">Booking Submitted!</h2>
+            <p class="text-sm text-gray-600 mb-6">Thank you! We have received your request for RM Dormitel.</p>
+            <a href="index.html" class="block w-full bg-[#A34343] text-white py-2 rounded font-bold uppercase text-xs tracking-widest hover:bg-[#8A3535]">BACK TO HOME</a>
+        </div>
+    </div>
+
+    <script>
+        // 1. File Upload Label Logic
+        const fileInput = document.getElementById('receipt-upload');
+        const fileLabel = document.getElementById('file-label').querySelector('span');
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                fileLabel.textContent = e.target.files[0].name;
+                fileLabel.classList.remove('text-gray-400');
+                fileLabel.classList.add('text-gray-800', 'font-medium');
+            }
+        });
+
+        // 2. Toggle Overlay Visibility
+        function toggleOverlay(show) {
+            const overlay = document.getElementById('successOverlay');
+            show ? overlay.classList.remove('hidden') : overlay.classList.add('hidden');
+        }
+
+        // 3. Form Submission Handler (Preventing POST errors)
+        document.getElementById('bookingForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Stop the browser from sending data to a backend
+            toggleOverlay(true);    // Show the success modal
+        });
+    </script>
+</body>
+</html>

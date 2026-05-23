@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RM Dormitel - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen p-8">
+
+<header class="bg-white border-b border-gray-200 mb-8">
+    <div class="max-w-5xl mx-auto flex justify-between items-center py-4 px-8">
+        <div class="flex items-center gap-3">
+            <!-- Replace with your actual logo path -->
+            <img src="logo.png" alt="RM DORMITEL" class="h-8">
+            <h1 class="font-black text-lg tracking-wide">RM DORMITEL</h1>
+        </div>
+        <!-- Changed href from admin-login.html to index.html -->
+        <a href="index.html" class="text-sm font-bold text-gray-700 hover:text-black transition">log out →</a>
+    </div>
+</header>
+
+    <!-- Stats Section -->
+    <div class="max-w-5xl mx-auto grid grid-cols-4 gap-6 mb-10">
+        <div class="bg-white p-6 border border-gray-300 rounded-lg">
+            <p class="text-xs uppercase font-bold text-gray-500 mb-2">Total Rooms</p>
+            <h2 class="text-4xl font-black text-black">9</h2>
+        </div>
+        <div class="bg-white p-6 border border-gray-300 rounded-lg">
+            <p class="text-xs uppercase font-bold text-gray-500 mb-2">Available</p>
+            <h2 id="count-available" class="text-4xl font-black text-green-600">5</h2>
+        </div>
+        <div class="bg-white p-6 border border-gray-300 rounded-lg">
+            <p class="text-xs uppercase font-bold text-gray-500 mb-2">Occupied</p>
+            <h2 id="count-occupied" class="text-4xl font-black text-red-600">2</h2>
+        </div>
+        <div class="bg-white p-6 border border-gray-300 rounded-lg">
+            <p class="text-xs uppercase font-bold text-gray-500 mb-2">Pending</p>
+            <h2 id="count-pending" class="text-4xl font-black text-yellow-500">2</h2>
+        </div>
+    </div>
+
+    <main class="max-w-5xl mx-auto">
+        <div class="flex gap-6 border-b border-gray-300 mb-6">
+            <button id="btn-rooms" onclick="switchTab('rooms')" class="pb-2 text-xs font-black uppercase border-b-2 border-black">Room Management</button>
+            <button id="btn-bookings" onclick="switchTab('bookings')" class="pb-2 text-xs font-black uppercase text-gray-400 hover:text-black transition">Booking Request</button>
+        </div>
+
+        <!-- Room Management Section -->
+        <div id="section-rooms" class="bg-white border border-gray-200 shadow-sm rounded-md overflow-hidden">
+            <table class="w-full text-left text-xs">
+                <thead class="bg-gray-100 text-gray-600 uppercase font-black">
+                    <tr><th class="p-4">Room#</th><th class="p-4">Type</th><th class="p-4">Capacity</th><th class="p-4">Price</th><th class="p-4">Status</th><th class="p-4">Actions</th></tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr class="bg-gray-50"><td class="p-4 font-black">101</td><td class="p-4">Standard Single</td><td class="p-4">1 pax</td><td class="p-4">₱500</td><td class="p-4"><span id="status-101" class="bg-yellow-400 px-3 py-1 rounded font-bold">Pending</span></td><td class="p-4"><select onchange="updateStatus('101', this.value)" class="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold"><option value="" disabled selected>Manage</option><option value="Available">Available</option><option value="Occupied">Occupied</option><option value="Pending">Pending</option></select></td></tr>
+                    <tr><td class="p-4 font-black">102</td><td class="p-4">Standard Single</td><td class="p-4">1 pax</td><td class="p-4">₱500</td><td class="p-4"><span id="status-102" class="bg-red-600 text-white px-3 py-1 rounded font-bold">Occupied</span></td><td class="p-4"><select onchange="updateStatus('102', this.value)" class="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold"><option value="" disabled selected>Manage</option><option value="Available">Available</option><option value="Occupied">Occupied</option><option value="Pending">Pending</option></select></td></tr>
+                    <tr class="bg-gray-50"><td class="p-4 font-black">103</td><td class="p-4">Standard Single</td><td class="p-4">1 pax</td><td class="p-4">₱500</td><td class="p-4"><span id="status-103" class="bg-green-600 text-white px-3 py-1 rounded font-bold">Available</span></td><td class="p-4"><select onchange="updateStatus('103', this.value)" class="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold"><option value="" disabled selected>Manage</option><option value="Available">Available</option><option value="Occupied">Occupied</option><option value="Pending">Pending</option></select></td></tr>
+                    <tr><td class="p-4 font-black">104</td><td class="p-4">Standard Double</td><td class="p-4">2 pax</td><td class="p-4">₱800</td><td class="p-4"><span id="status-104" class="bg-green-600 text-white px-3 py-1 rounded font-bold">Available</span></td><td class="p-4"><select onchange="updateStatus('104', this.value)" class="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold"><option value="" disabled selected>Manage</option><option value="Available">Available</option><option value="Occupied">Occupied</option><option value="Pending">Pending</option></select></td></tr>
+                    <tr class="bg-gray-50"><td class="p-4 font-black">201</td><td class="p-4">Deluxe Suite</td><td class="p-4">4 pax</td><td class="p-4">₱1500</td><td class="p-4"><span id="status-201" class="bg-red-600 text-white px-3 py-1 rounded font-bold">Occupied</span></td><td class="p-4"><select onchange="updateStatus('201', this.value)" class="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold"><option value="" disabled selected>Manage</option><option value="Available">Available</option><option value="Occupied">Occupied</option><option value="Pending">Pending</option></select></td></tr>
+                    <tr><td class="p-4 font-black">202</td><td class="p-4">Deluxe Suite</td><td class="p-4">4 pax</td><td class="p-4">₱1500</td><td class="p-4"><span id="status-202" class="bg-green-600 text-white px-3 py-1 rounded font-bold">Available</span></td><td class="p-4"><select onchange="updateStatus('202', this.value)" class="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold"><option value="" disabled selected>Manage</option><option value="Available">Available</option><option value="Occupied">Occupied</option><option value="Pending">Pending</option></select></td></tr>
+                    <tr class="bg-gray-50"><td class="p-4 font-black">203</td><td class="p-4">Standard Double</td><td class="p-4">2 pax</td><td class="p-4">₱800</td><td class="p-4"><span id="status-203" class="bg-green-600 text-white px-3 py-1 rounded font-bold">Available</span></td><td class="p-4"><select onchange="updateStatus('203', this.value)" class="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold"><option value="" disabled selected>Manage</option><option value="Available">Available</option><option value="Occupied">Occupied</option><option value="Pending">Pending</option></select></td></tr>
+                    <tr><td class="p-4 font-black">204</td><td class="p-4">Standard Double</td><td class="p-4">2 pax</td><td class="p-4">₱800</td><td class="p-4"><span id="status-204" class="bg-green-600 text-white px-3 py-1 rounded font-bold">Available</span></td><td class="p-4"><select onchange="updateStatus('204', this.value)" class="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold"><option value="" disabled selected>Manage</option><option value="Available">Available</option><option value="Occupied">Occupied</option><option value="Pending">Pending</option></select></td></tr>
+                    <tr class="bg-gray-50"><td class="p-4 font-black">205</td><td class="p-4">Deluxe Suite</td><td class="p-4">4 pax</td><td class="p-4">₱1500</td><td class="p-4"><span id="status-205" class="bg-yellow-400 px-3 py-1 rounded font-bold">Pending</span></td><td class="p-4"><select onchange="updateStatus('205', this.value)" class="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold"><option value="" disabled selected>Manage</option><option value="Available">Available</option><option value="Occupied">Occupied</option><option value="Pending">Pending</option></select></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Booking Request Section -->
+        <div id="section-bookings" class="hidden space-y-4">
+            <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                <div class="flex justify-between items-start mb-4">
+                    <div><h3 class="font-black text-lg">Jessel Mae Ramos</h3><p class="text-xs text-gray-500">jesselmaeramos@gmail.com | +63 985 681 8657</p></div>
+                    <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Pending</span>
+                </div>
+                <p class="text-[10px] uppercase font-black text-gray-400">Room Type: <span class="text-gray-900">Standard Single</span></p>
+                <div class="flex gap-2 mt-4"><button onclick="showReceipt('receipt1.png')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold">View Receipt</button><button class="bg-green-600 text-white px-4 py-2 rounded-lg text-xs font-bold">Confirm Booking</button></div>
+            </div>
+            <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                <div class="flex justify-between items-start mb-4">
+                    <div><h3 class="font-black text-lg">Angel Pola Orajay</h3><p class="text-xs text-gray-500">angelpolaorajay@gmail.com | +63 985 651 7837</p></div>
+                    <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Pending</span>
+                </div>
+                <p class="text-[10px] uppercase font-black text-gray-400">Room Type: <span class="text-gray-900">Deluxe Suite</span></p>
+                <div class="flex gap-2 mt-4"><button onclick="showReceipt('receipt3.png')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold">View Receipt</button><button class="bg-green-600 text-white px-4 py-2 rounded-lg text-xs font-bold">Confirm Booking</button></div>
+            </div>
+            <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                <div class="flex justify-between items-start mb-4">
+                    <div><h3 class="font-black text-lg">Rubie Jane Baclayon</h3><p class="text-xs text-gray-500">rubiebaclayon@gmail.com | +63 995 381 9712</p></div>
+                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Confirmed</span>
+                </div>
+                <p class="text-[10px] uppercase font-black text-gray-400">Room Type: <span class="text-gray-900">Standard Double</span></p>
+                <div class="flex gap-2 mt-4"><button onclick="showReceipt('receipt2.png')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold">View Receipt</button><button class="bg-green-600 text-white px-4 py-2 rounded-lg text-xs font-bold">Confirm Booking</button></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Receipt Modal -->
+<!-- Receipt Modal -->
+    <div id="receipt-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-sm w-full shadow-2xl relative flex flex-col overflow-hidden max-h-[85vh]">
+            
+            <!-- Modal Header with Close Button -->
+            <div class="flex justify-between items-center px-5 py-4 border-b border-gray-100">
+                <h3 class="font-black text-base text-gray-800">Booking Receipt</h3>
+                <button onclick="document.getElementById('receipt-modal').classList.add('hidden')" class="text-gray-400 hover:text-black text-xl font-bold transition">
+                    &times;
+                </button>
+            </div>
+            
+            <!-- Scrollable Image Container -->
+            <div class="p-5 overflow-y-auto flex-1 bg-gray-50 flex justify-center items-start">
+                <img id="modal-image" src="" alt="Booking Receipt" class="w-full h-auto object-contain rounded-lg shadow-sm">
+            </div>
+
+            <!-- Footer Action Button -->
+            <div class="p-4 border-t border-gray-100 bg-white flex justify-end">
+                <button onclick="document.getElementById('receipt-modal').classList.add('hidden')" class="w-full bg-gray-800 hover:bg-black text-white px-4 py-2.5 rounded-xl text-xs font-bold transition uppercase tracking-wider">
+                    Close Preview
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            const btnR = document.getElementById('btn-rooms');
+            const btnB = document.getElementById('btn-bookings');
+            const secR = document.getElementById('section-rooms');
+            const secB = document.getElementById('section-bookings');
+
+            if (tab === 'rooms') {
+                secR.classList.remove('hidden'); secB.classList.add('hidden');
+                btnR.classList.add('border-b-2', 'border-black'); btnR.classList.remove('text-gray-400');
+                btnB.classList.remove('border-b-2', 'border-black'); btnB.classList.add('text-gray-400');
+            } else {
+                secR.classList.add('hidden'); secB.classList.remove('hidden');
+                btnB.classList.add('border-b-2', 'border-black'); btnB.classList.remove('text-gray-400');
+                btnR.classList.remove('border-b-2', 'border-black'); btnR.classList.add('text-gray-400');
+            }
+        }
+
+        function updateStatus(roomId, newStatus) {
+            const statusSpan = document.getElementById('status-' + roomId);
+            statusSpan.innerText = newStatus;
+            statusSpan.className = 'px-3 py-1 rounded font-bold';
+            
+            if (newStatus === 'Available') statusSpan.classList.add('bg-green-600', 'text-white');
+            else if (newStatus === 'Occupied') statusSpan.classList.add('bg-red-600', 'text-white');
+            else if (newStatus === 'Pending') statusSpan.classList.add('bg-yellow-400');
+
+            let availableCount = 0;
+            let occupiedCount = 0;
+            let pendingCount = 0;
+
+            const statusSpans = document.querySelectorAll('[id^="status-"]');
+            
+            statusSpans.forEach(span => {
+                if (span.innerText === 'Available') availableCount++;
+                else if (span.innerText === 'Occupied') occupiedCount++;
+                else if (span.innerText === 'Pending') pendingCount++;
+            });
+
+            document.getElementById('count-available').innerText = availableCount;
+            document.getElementById('count-occupied').innerText = occupiedCount;
+            document.getElementById('count-pending').innerText = pendingCount;
+        }
+
+        function showReceipt(imageName) {
+            const modal = document.getElementById('receipt-modal');
+            const modalImg = document.getElementById('modal-image');
+            modalImg.src = imageName;
+            modal.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

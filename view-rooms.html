@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RM Dormitel - Available Rooms</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 p-6">
+        <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center bg-white">
+        <div class="flex items-center space-x-2">
+            <img src="logo.png" alt="RM Dormitel Logo" class="w-8 h-8 object-contain">
+
+            <span class="text-sm font-bold tracking-tight text-gray-800">RM DORMITEL</span>
+        </div>
+        <div class="flex items-center space-x-6 text-xs font-semibold">
+            <a href="view-rooms.html" class="text-gray-600 hover:text-black transition">View Rooms</a>
+            <a href="booking.html" class="bg-black text-white px-3 py-1.5 rounded hover:bg-gray-800 transition">Book Now</a>
+            <a href="admin_login.html" class="text-gray-600 hover:text-black transition">Admin</a>
+        </div>
+    </nav>
+    <main class="max-w-5xl mx-auto">
+        <h2 class="text-lg font-black uppercase mb-8">Available Rooms</h2>
+        
+        <!-- Room Grid Section -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <script>
+                // Define the 3 types with their unique images
+                const roomData = {
+                    'Standard Single': { 
+                        img: 'single.png', 
+                        price: '500 Pesos' 
+                    },
+                    'Standard Double': { 
+                        img: 'double.jpg', 
+                        price: '800 Pesos' 
+                    },
+                    'Deluxe Suite': { 
+                        img: 'deluxe.png', 
+                        price: '1500 Pesos' 
+                    }
+                };
+
+                const rooms = [
+                    { type: 'Standard Single', no: '101' },
+                    { type: 'Standard Single', no: '102' },
+                    { type: 'Standard Single', no: '103' },
+                    { type: 'Standard Double', no: '104' },
+                    { type: 'Standard Double', no: '203' },
+                    { type: 'Standard Double', no: '204' },
+                    { type: 'Deluxe Suite', no: '201' },
+                    { type: 'Deluxe Suite', no: '202' },
+                    { type: 'Deluxe Suite', no: '105' }
+                ];
+                
+                document.write(rooms.map(room => `
+                    <div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition">
+                        <img src="${roomData[room.type].img}" class="w-full h-40 object-cover rounded mb-4">
+                        <h3 class="text-xs font-black uppercase text-gray-900">${room.type}</h3>
+                        <p class="text-[10px] text-gray-500 mt-1">Price/5 hours: ${roomData[room.type].price}</p>
+                        <p class="text-[10px] text-gray-500 mb-4">Room Number: ${room.no}</p>
+                        <a href="booking.html" class="block text-center w-full bg-[#A34343] text-white text-[10px] font-bold uppercase py-2 rounded hover:bg-[#8A3535] transition">
+                            Book Now
+                        </a>
+                    </div>
+                `).join(''));
+            </script>
+        </div> <!-- End of the room grid container -->
+
+        <!-- INSERTED BACK TO HOME BUTTON BELOW THE ROOMS -->
+        <div class="flex justify-center mt-12 mb-6">
+            <a href="index.html" class="bg-[#A34343] hover:bg-[#8A3535] text-white text-[11px] px-8 py-3 rounded font-bold uppercase tracking-wider transition text-center shadow-sm">
+                Back to Home
+            </a>
+        </div>
+
+    </main>
+</body>
+</html>

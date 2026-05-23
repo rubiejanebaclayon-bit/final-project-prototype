@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RM Dormitel - Admin Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Shake animation for invalid login */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .shake-error { animation: shake 0.2s ease-in-out 0s 2; }
+    </style>
+</head>
+<body class="bg-gray-200 min-h-screen flex items-center justify-center font-sans antialiased relative">
+
+    <div class="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80" alt="Background" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-white/75 backdrop-blur-sm"></div>
+    </div>
+
+    <main id="loginCard" class="relative z-10 bg-white rounded-lg shadow-xl border border-white max-w-[360px] w-full mx-4 p-8 transition-all duration-300">
+        <div class="text-center mb-6">
+            <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-700 mx-auto mb-2 border border-gray-200 text-sm">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <h2 class="text-xs font-black uppercase tracking-widest text-gray-900">Admin Portal</h2>
+            <p class="text-[10px] text-gray-400 mt-1">Management authentication required</p>
+        </div>
+
+        <form id="loginForm" class="space-y-4">
+            <div>
+                <label class="block text-[10px] font-black text-gray-800 uppercase tracking-wider mb-1.5">Username</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 text-xs">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+                    <input type="text" id="username" placeholder="Enter username" required class="w-full bg-gray-100 border border-gray-200 text-xs pl-9 pr-3 py-2.5 rounded text-gray-700 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-gray-400 transition">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-[10px] font-black text-gray-800 uppercase tracking-wider mb-1.5">Password</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 text-xs">
+                        <i class="fa-solid fa-lock"></i>
+                    </span>
+                    <input type="password" id="password" placeholder="Enter password" required class="w-full bg-gray-100 border border-gray-200 text-xs pl-9 pr-3 py-2.5 rounded text-gray-700 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-gray-400 transition">
+                </div>
+            </div>
+
+            <div class="pt-2 flex flex-col items-center space-y-3">
+                <button type="submit" class="w-full bg-gray-900 hover:bg-black text-white text-[10px] font-bold uppercase tracking-widest py-3 rounded shadow-sm transition">
+                    Sign In
+                </button>
+                <a href="index.html" class="inline-block bg-[#9AD0EC] hover:bg-[#7EC2E7] text-gray-900 text-[10px] font-semibold px-4 py-1.5 rounded transition">
+                    Back to Home
+                </a>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            
+            const card = document.getElementById('loginCard');
+            const usernameInput = document.getElementById('username').value;
+            const passwordInput = document.getElementById('password').value;
+            
+            if (usernameInput === "admin" && passwordInput === "admin123") {
+                window.location.href = "admin-dashboard.html"; 
+            } else {
+                // Trigger visual error feedback
+                card.classList.add('shake-error');
+                setTimeout(() => card.classList.remove('shake-error'), 500);
+                
+                alert("Invalid Username or Password.");
+                document.getElementById('password').value = "";
+            }
+        });
+    </script>
+</body>
+</html>
