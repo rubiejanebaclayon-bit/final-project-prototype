@@ -22,7 +22,21 @@
 
             <div>
                 <label class="block text-[10px] font-black text-gray-800 uppercase tracking-wider mb-1.5">Contact Number</label>
-                <input type="tel" placeholder="Enter your contact number" required class="w-full bg-gray-100 border border-gray-200 text-xs px-3 py-2.5 rounded text-gray-700 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-gray-400 transition">
+                <!-- 
+                  FIX APPLIED (BUG-005): 
+                  - type="tel" presents the numeric keypad on touch devices.
+                  - pattern="09\d{9}" requires a continuous numeric string starting precisely with '09' followed by 9 digits.
+                  - maxlength="11" blocks users from entering excess digits.
+                -->
+                <input 
+                    type="tel" 
+                    id="contactNumber"
+                    placeholder="Enter your contact number (e.g., 09123456789)" 
+                    pattern="09\d{9}"
+                    maxlength="11"
+                    required 
+                    class="w-full bg-gray-100 border border-gray-200 text-xs px-3 py-2.5 rounded text-gray-700 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-gray-400 transition"
+                >
             </div>
 
             <div>
@@ -100,7 +114,19 @@
             show ? overlay.classList.remove('hidden') : overlay.classList.add('hidden');
         }
 
-        // 3. Form Submission Handler (Preventing POST errors)
+        // 3. Form Submission Handler & Custom Field Constraint Messages
+        const contactField = document.getElementById('contactNumber');
+        
+        contactField.addEventListener('input', () => {
+            // Clean dynamic alert context if field changes match the pattern definition
+            contactField.setCustomValidity('');
+        });
+
+        contactField.addEventListener('invalid', () => {
+            // Renders custom warning prompts to the client browser instead of generic placeholder rules
+            contactField.setCustomValidity('Please enter a valid 11-digit Philippine mobile number starting with 09 (e.g., 09123456789).');
+        });
+
         document.getElementById('bookingForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Stop the browser from sending data to a backend
             toggleOverlay(true);    // Show the success modal
